@@ -1,6 +1,6 @@
 [submodule "src/Asm"]
 	path = src/Asm
-	url = https://github.com/zaps166/NFSIISE-ASM
+	url = https://github.com/kofredwan13/NFS2SE
 [submodule "src/Cpp"]
 	path = src/Cpp
-	url = https://github.com/zaps166/NFSIISE-CPP
+	url = https://github.com/kofredwan13/NFS2SE-CPP
