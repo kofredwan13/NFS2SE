@@ -2,6 +2,11 @@
 
 #include "User32.h"
 
+// kofred - cirtual gamepad codes
+// #ifdef __ANDROID__
+	#include "virtual_controls.h"
+// #endif
+
 #include <SDL2/SDL_messagebox.h>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_video.h>
@@ -161,6 +166,17 @@ REALIGN STDCALL BOOL GetMessageA_wrap(MSG *msg, void *hWnd, uint32_t wMsgFilterM
 
 					switch (sym)
 					{
+						// #ifdef __ANDROID__
+						case SDL_FINGERDOWN:
+						case SDL_FINGERUP:
+						case SDL_FINGERMOTION:
+							VirtualControls_HandleFingerEvent(&event.tfinger);
+							break;
+						// case SDL_MOUSEBUTTONDOWN:
+						// case SDL_MOUSEBUTTONUP:
+						// 	VirtualControls_HandleFingerEvent(&event.button);
+						// 	break;
+						// #endif
 						case SDLK_LSHIFT:
 						case SDLK_RSHIFT:
 							msg->wParam = 0x10;

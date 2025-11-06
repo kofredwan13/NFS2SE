@@ -2,6 +2,11 @@
 
 #include "../Glide2x.h"
 
+// kofred - virtual control codes
+// #ifdef __ANDROID__
+	#include "../virtual_controls.h"
+// #endif
+
 #include <SDL2/SDL_stdinc.h>
 #include <SDL2/SDL_video.h>
 
@@ -473,8 +478,10 @@ static void useGameProgram(BOOL gameProgram)
 {
 	if (gameProgram)
 	{
-		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_BLEND);
+		// glEnable(GL_DEPTH_TEST);
+		// glEnable(GL_BLEND);
+		glDisable(GL_DEPTH_TEST);
+		glDisable(GL_BLEND);
 
 		glBindFramebuffer(GL_FRAMEBUFFER, g_framebuffer);
 
@@ -855,6 +862,9 @@ REALIGN STDCALL void grBufferSwap(int swap_interval)
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
+	// kofred- virtual gamepad code
+	VirtualControls_Draw();
+
 	SDL_GL_SwapWindow(sdlWin);
 
 	if (needRecreateGl)
@@ -869,6 +879,10 @@ REALIGN STDCALL void grBufferSwap(int swap_interval)
 		createFrameBuffer();
 		useGameProgram(true);
 		grClipWindow(0, 0, 640, 480);
+		
+		// kofred - virtual gamepad codes
+		VirtualControls_OnWindowResized(winWidth, winHeight);
+
 		windowResized = false;
 	}
 	else

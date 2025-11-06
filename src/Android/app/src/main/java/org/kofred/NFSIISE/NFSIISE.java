@@ -1,4 +1,4 @@
-package org.zaps166.NFSIISE;
+package org.kofred.NFSIISE;
 
 import org.libsdl.app.SDLActivity;
 

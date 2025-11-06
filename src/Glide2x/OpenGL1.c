@@ -2,6 +2,11 @@
 
 #include "../Glide2x.h"
 
+// kofred - virtual gamepad codes
+// #ifdef __ANDROID__
+	#include "../virtual_controls.h"
+// #endif
+
 #include <SDL2/SDL_stdinc.h>
 #include <SDL2/SDL_opengl.h>
 #include <SDL2/SDL_video.h>
@@ -141,6 +146,10 @@ REALIGN STDCALL void grBufferSwap(int swap_interval)
 	if (windowResized)
 	{
 		grClipWindow(0, 0, 640, 480);
+		
+		// kofred - virtual gamepad codes
+		VirtualControls_OnWindowResized(winWidth, winHeight);
+
 		windowResized = false;
 	}
 
@@ -148,6 +157,11 @@ REALIGN STDCALL void grBufferSwap(int swap_interval)
 	glGetIntegerv(GL_SCISSOR_BOX, scissorBox);
 	if (clearUnusedArea(xOffset, yOffset, visibleWidth, visibleHeight))
 		glScissor(scissorBox[0], scissorBox[1], scissorBox[2], scissorBox[3]);
+
+	// kofred - virtual gamepad codes
+	#ifdef OPENGL1X
+	VirtualControls_Draw_GL1();
+	#endif
 
 	SDL_GL_SwapWindow(sdlWin);
 }

@@ -10,6 +10,10 @@
 #else
 	#include <sched.h>
 #endif
+// kofred - include virtual gamepad headers
+// #ifdef __ANDROID__
+	#include "virtual_controls.h"
+// #endif
 
 static const char title[] = "Need For Speed II SE";
 
@@ -527,6 +531,12 @@ void WrapperInit(void)
 #ifndef OPENGL1X
 # ifdef GLES2
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
+	SDL_GL_SetAttribute(SDL_GL_RED_SIZE,   8);
+	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
+	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,  8);
+	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);   // <— important
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 # endif
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
@@ -637,6 +647,15 @@ REALIGN STDCALL SDL_Window *WrapperCreateWindow(WindowProc windowProc)
 	}
 
 	SDL_GetWindowSize(sdlWin, &winWidth, &winHeight);
+
+
+// kofred - virtual gamepad codes
+// #ifdef __ANDROID__
+// int win_w = initialWinWidth;
+// int win_h = initialWinHeight;
+VirtualControls_Init(winWidth, winHeight);
+// #endif
+
 
 #ifndef __ANDROID__
 	icon = (uint32_t *)malloc(32 * 32 * 4);

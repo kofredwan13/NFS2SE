@@ -9,7 +9,7 @@ else {
 
 android {
     if (buildAsApplication) {
-        namespace "org.zaps166.NFSIISE"
+        namespace "org.kofred.NFSIISE"
     }
     compileSdkVersion 34
     defaultConfig {
